@@ -1,0 +1,64 @@
+@startuml
+class ChartComponent {
+    +chartData: Object
+    +chartType: String
+    +useEffect(): void
+    +renderChart(): JSX.Element
+    +handleChartTypeChange(): void
+}
+
+class GraficoComponent {
+    +graficos: Array
+    +useEffect(): void
+}
+
+class ChartActions {
+    +graficoId: String
+    +graficoData: Object
+    +handleCreateGrafico(): void
+    +handleUpdateGrafico(): void
+    +handleDeleteGrafico(): void
+    +handleProcessGraficos(): void
+}
+
+class SampleForm {
+    +form: Object
+    +handleChange(): void
+    +handleSubmit(): void
+}
+
+class SampleList {
+    +muestras: Array
+    +useEffect(): void
+}
+
+class SampleActions {
+    +procesarMuestras(): void
+    +agruparMuestras(): void
+}
+
+class graficoService {
+    +getGrafico(id: String): Promise
+    +createGrafico(data: Object): Promise
+    +updateGrafico(id: String, data: Object): Promise
+    +deleteGrafico(id: String): Promise
+    +getAllGraficos(): Promise
+    +procesarGraficos(): Promise
+}
+
+class muestraService {
+    +getMuestra(id: String): Promise
+    +createMuestra(tipo: String, data: Object): Promise
+    +updateMuestra(id: String, tipo: String, data: Object): Promise
+    +deleteMuestra(id: String, tipo: String): Promise
+    +procesarYAgruparMuestras(): Promise
+    +getAllMuestras(tipo: String): Promise
+}
+
+ChartComponent --> graficoService
+GraficoComponent --> graficoService
+ChartActions --> graficoService
+SampleForm --> muestraService
+SampleList --> muestraService
+SampleActions --> muestraService
+@enduml

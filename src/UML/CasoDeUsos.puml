@@ -1,0 +1,26 @@
+@startuml
+actor Usuario
+actor Administrador
+
+usecase "Visualizar gráficos" as UC1
+usecase "Crear gráfico" as UC2
+usecase "Actualizar gráfico" as UC3
+usecase "Eliminar gráfico" as UC4
+usecase "Procesar gráficos" as UC5
+usecase "Ver muestras" as UC6
+usecase "Crear muestra" as UC7
+usecase "Actualizar muestra" as UC8
+usecase "Eliminar muestra" as UC9
+usecase "Procesar y agrupar muestras" as UC10
+
+Usuario --> UC1
+Usuario --> UC6
+Administrador --> UC2
+Administrador --> UC3
+Administrador --> UC4
+Administrador --> UC5
+Administrador --> UC7
+Administrador --> UC8
+Administrador --> UC9
+Administrador --> UC10
+@enduml
