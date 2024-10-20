@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import ChartComponent from '../components/Chart';
+import React from 'react';
+import ChartComponent from '../components/Chart';  // Asegúrate de que las rutas sean correctas
+import GraficoComponent from '../components/GraficoComponent';  // Asegúrate de que las rutas sean correctas
+import ChartActions from '../components/ChartActions';  // Asegúrate de que la ruta sea correcta
 
 function ChartsPage() {
     return (
         <div style={styles.container}>
             <h1 style={styles.title}>Visualización de Gráficos</h1>
-            <ChartComponent />
+            <ChartActions />  {/* Aquí se agrega ChartActions */}
+            <ChartComponent />  {/* Aquí se renderiza ChartComponent */}
+            <GraficoComponent />  {/* Aquí se renderiza GraficoComponent */}
         </div>
     );
 }
@@ -25,6 +28,5 @@ const styles = {
     },
 };
 
-ChartsPage.propTypes = {};
-
 export default ChartsPage;
+

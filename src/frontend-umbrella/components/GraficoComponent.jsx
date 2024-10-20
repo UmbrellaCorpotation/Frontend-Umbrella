@@ -1,3 +1,4 @@
+// src/components/GraficoComponent.jsx
 import React, { useEffect, useState } from 'react';
 import graficoService from '../services/graficoService';
 
@@ -29,4 +30,3 @@ function GraficoComponent() {
 }
 
 export default GraficoComponent;
-

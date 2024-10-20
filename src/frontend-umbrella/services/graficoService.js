@@ -14,7 +14,7 @@ const graficoService = {
     createGrafico: (data) => api.post('/', data),
     updateGrafico: (id, data) => api.put(`/${id}`, data),
     deleteGrafico: (id) => api.delete(`/${id}`),
-    getAllGraficos: () => api.get('/'),
+    getAllGraficos: () => api.get('/obtener'),
     procesarGraficos: () => api.post('/procesar')
 };
 

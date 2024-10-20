@@ -1,4 +1,3 @@
-// src/components/ChartComponent.jsx
 import React, { useEffect, useState } from 'react';
 import { Bar, Pie, Line } from 'react-chartjs-2';
 import graficoService from '../services/graficoService';
@@ -19,51 +18,49 @@ ChartJS.register(
 function ChartComponent() {
     const [chartData, setChartData] = useState(null);
     const [chartType, setChartType] = useState('bar');
+    const [graficos, setGraficos] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         graficoService.getAllGraficos()
             .then(response => {
                 const data = response.data;
-                if (data.length === 0) {
-                    setChartData(null);
-                    return;
+                setGraficos(data.slice(0, 9)); // Mostrar solo los primeros 9 gráficos
+                if (data.length > 0) {
+                    procesarGrafico(data[0]);
                 }
-
-                const datosProcesados = data[0].datosProcesados;
-                const labels = Object.keys(datosProcesados);
-                const values = Object.values(datosProcesados);
-
-                const formattedData = {
-                    labels,
-                    datasets: [
-                        {
-                            label: 'Datos Procesados',
-                            data: values,
-                            backgroundColor: [
-                                'rgba(75,192,192,0.6)',
-                                'rgba(153,102,255,0.6)',
-                                'rgba(255,159,64,0.6)',
-                                'rgba(255,99,132,0.6)',
-                                'rgba(54,162,235,0.6)',
-                                'rgba(255,206,86,0.6)',
-                                'rgba(75,192,192,0.6)',
-                            ],
-                            borderColor: [
-                                'rgba(75,192,192,1)',
-                                'rgba(153,102,255,1)',
-                                'rgba(255,159,64,1)',
-                            ],
-                            borderWidth: 1,
-                        },
-                    ],
-                };
-
-                setChartData(formattedData);
             })
             .catch(error => {
                 console.error('Error al obtener los gráficos:', error);
             });
     }, []);
+
+    const procesarGrafico = (grafico) => {
+        if (!grafico || !grafico.datosProcesados) return;
+
+        const labels = Object.keys(grafico.datosProcesados);
+        const values = Object.values(grafico.datosProcesados);
+
+        const formattedData = {
+            labels,
+            datasets: [
+                {
+                    label: `Gráfico: ${grafico.id}`,
+                    data: values,
+                    backgroundColor: 'rgba(75,192,192,0.6)',
+                    borderColor: 'rgba(75,192,192,1)',
+                    borderWidth: 1,
+                },
+            ],
+        };
+
+        setChartData(formattedData);
+    };
+
+    const handleGraficoChange = (e) => {
+        const selectedGrafico = graficos.find(g => g.id === parseInt(e.target.value, 10));
+        procesarGrafico(selectedGrafico);
+    };
 
     const handleChartTypeChange = (e) => {
         setChartType(e.target.value);
@@ -95,14 +92,28 @@ function ChartComponent() {
 
     return (
         <div style={styles.container}>
-            <div style={styles.controls}>
-                <label htmlFor="chartType" style={styles.label}>Tipo de Gráfico:</label>
-                <select id="chartType" value={chartType} onChange={handleChartTypeChange} style={styles.select}>
-                    <option value="bar">Barra</option>
-                    <option value="pie">Circular</option>
-                    <option value="line">Línea</option>
-                </select>
+            <div style={styles.controlsContainer}>
+                <div style={styles.control}>
+                    <label htmlFor="graficoSelect" style={styles.label}>Seleccionar Gráfico:</label>
+                    <select id="graficoSelect" onChange={handleGraficoChange} style={styles.select}>
+                        {graficos.map(grafico => (
+                            <option key={grafico.id} value={grafico.id}>
+                                {`Gráfico ${grafico.id}`}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
+                <div style={styles.control}>
+                    <label htmlFor="chartType" style={styles.label}>Tipo de Gráfico:</label>
+                    <select id="chartType" value={chartType} onChange={handleChartTypeChange} style={styles.select}>
+                        <option value="bar">Barra</option>
+                        <option value="pie">Circular</option>
+                        <option value="line">Línea</option>
+                    </select>
+                </div>
             </div>
+
             <div style={styles.chart}>
                 {renderChart()}
             </div>
@@ -117,14 +128,20 @@ const styles = {
         borderRadius: '8px',
         boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
     },
-    controls: {
+    controlsContainer: {
         display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: 'space-between',
         marginBottom: '20px',
     },
+    control: {
+        flex: 1,
+        marginRight: '20px',
+        display: 'flex',
+        flexDirection: 'column',
+        maxWidth: '250px',
+    },
     label: {
-        marginRight: '10px',
+        marginBottom: '5px',
         fontSize: '16px',
         color: '#2c3e50',
     },

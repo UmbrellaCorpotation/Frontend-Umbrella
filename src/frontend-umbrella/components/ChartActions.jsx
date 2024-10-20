@@ -6,7 +6,7 @@ function ChartActions() {
     const [graficoId, setGraficoId] = useState('');
     const [graficoData, setGraficoData] = useState({
         datosProcesados: {},
-        grupoMuestrasId: null
+        grupoMuestrasId: null,
     });
 
     const handleCreateGrafico = () => {
