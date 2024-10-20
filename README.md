@@ -30,14 +30,14 @@ El frontend se organiza en los siguientes componentes:
 - **muestraService**: Servicio que interactúa con la API REST para gestionar las muestras.
 
 ## 3. Componentes
-### 4.1. ChartComponent
+### 3.1. ChartComponent
 Este componente es responsable de renderizar los gráficos utilizando Chart.js. Los gráficos pueden mostrarse en formato de barra, línea o circular, según la selección del usuario.
 
-### 4.2. GraficoComponent
+### 3.2. GraficoComponent
 Este componente lista los gráficos obtenidos desde el backend y permite la selección de uno para su visualización.
 
-### 4.3. ChartActions
+### 3.3. ChartActions
 Proporciona un conjunto de botones y formularios para crear, actualizar y eliminar gráficos desde el frontend.
 
-### 4.4. SampleList y SampleForm
+### 3.4. SampleList y SampleForm
 Componentes dedicados a la gestión de muestras bioquímicas, permitiendo su creación, edición y visualización en forma de lista.
